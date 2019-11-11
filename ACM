@@ -1,0 +1,3 @@
+SELECT USERDB_MASTER.asset_classes.asset_type, USERDB_MASTER.asset_classes.tier, userdb_master.model_portfolio_asset_class_weights.asset_class_weight
+From USERDB_MASTER.asset_classes
+join userdb_master.model_portfolio_asset_class_weights on USERDB_MASTER.asset_classes.id = userdb_master.model_portfolio_asset_class_weights.asset_class_id
