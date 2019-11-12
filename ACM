@@ -1,3 +1,16 @@
+SELECT 
+userdb_master.staged_model_portfolios.model_portfolio_set_uid,
+USERDB_MASTER.allocations.staged_model_portfolio_uid,
+USERDB_MASTER.asset_classes.asset_type,
+USERDB_MASTER.ALLOCATIONS.WEIGHT
+FROM 
+userdb_master.staged_model_portfolios,
+USERDB_MASTER.asset_classes, 
+USERDB_MASTER.allocations
+where USERDB_MASTER.allocations.target_uid = USERDB_MASTER.asset_classes.uid and USERDB_MASTER.allocations.staged_model_portfolio_uid = userdb_master.staged_model_portfolios.UID and USERDB_MASTER.ALLOCATIONS.target_type = 'AssetClass'
+
+
+-----
 SELECT USERDB_MASTER.asset_classes.asset_type, USERDB_MASTER.asset_classes.tier, userdb_master.model_portfolio_asset_class_weights.asset_class_weight
 From USERDB_MASTER.asset_classes
 join userdb_master.model_portfolio_asset_class_weights on USERDB_MASTER.asset_classes.id = userdb_master.model_portfolio_asset_class_weights.asset_class_id
