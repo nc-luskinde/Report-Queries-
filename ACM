@@ -1,4 +1,25 @@
 SELECT 
+userdb_master.model_portfolio_set_activations.plan_id,
+userdb_master.staged_model_portfolios.model_portfolio_set_uid,
+userdb_master.model_portfolio_labels.uid,
+USERDB_MASTER.allocations.staged_model_portfolio_uid,
+USERDB_MASTER.asset_classes.asset_type,
+USERDB_MASTER.ALLOCATIONS.WEIGHT
+FROM 
+userdb_master.model_portfolio_set_activations,
+userdb_master.staged_model_portfolios,
+USERDB_MASTER.asset_classes, 
+USERDB_MASTER.allocations,
+userdb_master.model_portfolio_labels
+where userdb_master.staged_model_portfolios.model_portfolio_set_uid = userdb_master.model_portfolio_set_activations.model_portfolio_set_uid and 
+USERDB_MASTER.allocations.target_uid = USERDB_MASTER.asset_classes.uid  and USERDB_MASTER.ALLOCATIONS.target_type = 'AssetClass'
+and userdb_master.model_portfolio_labels.labelable_type = 'ModelPortfolioSet'
+and userdb_master.model_portfolio_labels.key = 'external_id'
+and userdb_master.model_portfolio_set_activations.status = 'active'
+and userdb_master.model_portfolio_set_activations.type = 'AssetClassModelPortfolioSet'
+--------
+
+SELECT 
 userdb_master.staged_model_portfolios.model_portfolio_set_uid,
 USERDB_MASTER.allocations.staged_model_portfolio_uid,
 USERDB_MASTER.asset_classes.asset_type,
