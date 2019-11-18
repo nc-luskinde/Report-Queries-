@@ -1,4 +1,4 @@
-SELECT 
+SELECT DISTINCT
 p.plan_name 
 , p.external_id
 ,  smp.model_portfolio_set_uid
