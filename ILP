@@ -4,6 +4,7 @@ p.plan_name
 ,  smp.model_portfolio_set_uid
 ,smp.uid smp_id
 , a.description_1 fund
+, a.ticker
 , al.weight
 from  userdb_master.staged_model_portfolios smp 
 inner join 
