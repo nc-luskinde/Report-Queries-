@@ -1,4 +1,4 @@
-SELECT 
+SELECT DISTINCT
 p.plan_name 
 , p.external_id
 ,  smp.model_portfolio_set_uid
@@ -31,72 +31,3 @@ and upper(sa.type) = 'ASSETCLASSMODELPORTFOLIOSETACTIVATION'
 order by 1,3,4 desc
 ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.ZZZ
-
-SELECT 
-userdb_master.model_portfolio_set_activations.plan_id,
-userdb_master.staged_model_portfolios.model_portfolio_set_uid,
-userdb_master.model_portfolio_labels.uid,
-USERDB_MASTER.allocations.staged_model_portfolio_uid,
-USERDB_MASTER.asset_classes.asset_type,
-USERDB_MASTER.ALLOCATIONS.WEIGHT
-FROM 
-userdb_master.model_portfolio_set_activations,
-userdb_master.staged_model_portfolios,
-USERDB_MASTER.asset_classes, 
-USERDB_MASTER.allocations,
-userdb_master.model_portfolio_labels
-where userdb_master.staged_model_portfolios.model_portfolio_set_uid = userdb_master.model_portfolio_set_activations.model_portfolio_set_uid and 
-USERDB_MASTER.allocations.target_uid = USERDB_MASTER.asset_classes.uid  and USERDB_MASTER.ALLOCATIONS.target_type = 'AssetClass'
-and userdb_master.model_portfolio_labels.labelable_type = 'ModelPortfolioSet'
-and userdb_master.model_portfolio_labels.key = 'external_id'
-and userdb_master.model_portfolio_set_activations.status = 'active'
-and userdb_master.model_portfolio_set_activations.type = 'AssetClassModelPortfolioSet'
---------
-
-SELECT 
-userdb_master.staged_model_portfolios.model_portfolio_set_uid,
-USERDB_MASTER.allocations.staged_model_portfolio_uid,
-USERDB_MASTER.asset_classes.asset_type,
-USERDB_MASTER.ALLOCATIONS.WEIGHT
-FROM 
-userdb_master.staged_model_portfolios,
-USERDB_MASTER.asset_classes, 
-USERDB_MASTER.allocations
-where USERDB_MASTER.allocations.target_uid = USERDB_MASTER.asset_classes.uid and USERDB_MASTER.allocations.staged_model_portfolio_uid = userdb_master.staged_model_portfolios.UID and USERDB_MASTER.ALLOCATIONS.target_type = 'AssetClass'
-
-
------
-SELECT USERDB_MASTER.asset_classes.asset_type, USERDB_MASTER.asset_classes.tier, userdb_master.model_portfolio_asset_class_weights.asset_class_weight
-From USERDB_MASTER.asset_classes
-join userdb_master.model_portfolio_asset_class_weights on USERDB_MASTER.asset_classes.id = userdb_master.model_portfolio_asset_class_weights.asset_class_id
-
-------
-
-select 
-USERDB_MASTER.MODEL_PORTFOLIO_LABELS.value, 
-USERDB_MASTER.MODEL_PORTFOLIO_SETS.*,
-userdb_master.model_portfolio_asset_class_weights.asset_class_id, 
-userdb_master.model_portfolio_asset_class_weights.asset_class_weight
-from 
-USERDB_MASTER.MODEL_PORTFOLIO_SETS, 
-USERDB_MASTER.MODEL_PORTFOLIO_LABELS,
-userdb_master.model_portfolio_asset_class_weights
-WHERE 
-USERDB_MASTER.MODEL_PORTFOLIO_LABELS.LABELABLE_UID = userdb_master.model_portfolio_asset_class_weights.MODEL_PORTFOLIO_UID
---userdb_master.model_portfolio_asset_class_weights.MODEL_PORTFOLIO_UID =  USERDB_MASTER.MODEL_PORTFOLIO_LABELS.LABELABLE_UID
-    AND USERDB_MASTER.MODEL_PORTFOLIO_SETS.TYPE = 'AssetClassModelPortfolioSet' and USERDB_MASTER.MODEL_PORTFOLIO_LABELS.labelable_type = 'ModelPortfolioSet' and USERDB_MASTER.MODEL_PORTFOLIO_LABELS.key = 'external_id' 
