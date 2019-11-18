@@ -1,3 +1,27 @@
+SELECT 
+userdb_master.model_portfolio_set_activations.plan_id,
+userdb_master.staged_model_portfolios.model_portfolio_set_uid,
+userdb_master.model_portfolio_labels.uid,
+USERDB_MASTER.allocations.staged_model_portfolio_uid,
+MARKET_DATA.ASSETS.description_1,
+USERDB_MASTER.ALLOCATIONS.WEIGHT
+FROM 
+userdb_master.model_portfolio_set_activations,
+userdb_master.staged_model_portfolios,
+MARKET_DATA.ASSETS, 
+USERDB_MASTER.allocations,
+userdb_master.model_portfolio_labels
+left join userdb_master.model_portfolio_set_activations on userdb_master.staged_model_portfolios.model_portfolio_set_uid = userdb_master.model_portfolio_set_activations.model_portfolio_set_uid
+left join USERDB_MASTER.plan_securities on MARKET_DATA.ASSETS.asset_id = USERDB_MASTER.plan_securities.asset_id
+left join USERDB_MASTER.allocations on USERDB_MASTER.plan_securities.asset_uid = USERDB_MASTER.allocations.target_uid
+where  USERDB_MASTER.ALLOCATIONS.target_type = 'AssetNorthAmerica'
+and upper(userdb_master.model_portfolio_labels.labelable_type) = 'ModelPortfolioSet'
+and upper(userdb_master.model_portfolio_labels.key) = 'EXTERNAL_ID'
+and upper(userdb_master.model_portfolio_set_activations.status) = 'active'
+and upper(userdb_master.model_portfolio_set_activations.type) = 'SecurityModelPortfolioSetActivation'
+--------------------
+
+
 SELECT  MARKET_DATA.ASSETS.description_1, MARKET_DATA.ASSETS.ticker, USERDB_MASTER.MODEL_PORTFOLIO_SECURITY_WEIGHTS.model_portfolio_id,USERDB_MASTER.MODEL_PORTFOLIO_SECURITY_WEIGHTS.security_weight,USERDB_MASTER.MODEL_PORTFOLIOS.external_id
 FROM MARKET_DATA.ASSETS
 inner jOIN USERDB_MASTER.MODEL_PORTFOLIO_SECURITY_WEIGHTS ON MARKET_DATA.ASSETS.ASSET_ID = USERDB_MASTER.MODEL_PORTFOLIO_SECURITY_WEIGHTS.ASSET_ID
