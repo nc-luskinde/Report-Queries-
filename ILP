@@ -1,4 +1,43 @@
 SELECT 
+p.plan_name 
+, p.external_id
+,  smp.model_portfolio_set_uid
+,smp.uid smp_id
+, a.description_1 fund
+, al.weight
+from  userdb_master.staged_model_portfolios smp 
+inner join 
+  userdb_master.allocations al 
+  on al.staged_model_portfolio_id = smp.id 
+  and al.db_name = smp.db_name 
+left join 
+userdb_master.plan_securities ps 
+  on ps.asset_id = al.target_id
+left join 
+market_data.assets a
+  on a.asset_id = ps.asset_id
+left join 
+  userdb_master.model_portfolio_labels l
+  on l.labelable_uid = smp.model_portfolio_set_uid
+left join userdb_master.model_portfolio_set_activations sa
+on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid 
+inner join 
+  userdb_master.plans p 
+  on p.id = sa.plan_id
+  and p.db_name = sa.db_name
+
+where upper(l.labelable_type) = 'MODELPORTFOLIOSET'
+and upper(l.key) = 'EXTERNAL_ID'
+and upper(al.target_type) = 'ASSETNORTHAMERICA'
+and upper(sa.status) = 'ACTIVE'
+and upper(sa.type) = 'SECURITYMODELPORTFOLIOSETACTIVATION'
+
+order by 1,3,4 desc
+;
+
+-----------------
+
+SELECT 
 userdb_master.model_portfolio_set_activations.plan_id,
 userdb_master.staged_model_portfolios.model_portfolio_set_uid,
 userdb_master.model_portfolio_labels.uid,
