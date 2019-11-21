@@ -1,4 +1,4 @@
-SELECT 
+SELECT distinct
   p.plan_name
   , p.external_id
   , md.description_1 fund
