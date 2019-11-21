@@ -1,4 +1,23 @@
 SELECT 
+  p.plan_name
+  , p.external_id
+  , md.description_1 fund
+  , md.ticker
+  , ps.activation_date
+  , ps.close_date
+FROM 
+userdb_master.plans p 
+left join 
+userdb_master.plan_securities ps
+on ps.plan_uid = p.uid
+left join 
+MARKET_DATA.ASSETS md 
+on md.asset_id = ps.asset_id
+where 
+upper(p.external_id) = 'CDG'
+;
+---------
+SELECT 
 userdb_master.plan.plan_name,
 userdb_master.plans.external_id,
 MARKET_DATA.ASSETS.description_1,
