@@ -5,8 +5,9 @@ SELECT distinct
   , md.ticker
   , ps.is_eligible_for_managed_accounts
   , ps.status
-  , ps.activation_date
   , ps.close_date
+  , ps.activation_date
+ 
 FROM 
 userdb_master.plan_securities ps
 left join 
