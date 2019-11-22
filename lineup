@@ -3,18 +3,20 @@ SELECT distinct
   , p.external_id
   , md.description_1 fund
   , md.ticker
+  , ps.is_eligible_for_managed_accounts
+  , ps.status
   , ps.activation_date
   , ps.close_date
 FROM 
-userdb_master.plans p 
-left join 
 userdb_master.plan_securities ps
-on ps.plan_uid = p.uid
+left join 
+userdb_master.plans p
+on p.uid = ps.plan_uid 
 left join 
 MARKET_DATA.ASSETS md 
 on md.asset_id = ps.asset_id
 where 
-upper(p.external_id) = 'CDG'
+upper(p.external_id) = 'HMI'
 ;
 ---------
 SELECT 
