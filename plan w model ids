@@ -9,6 +9,33 @@ on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid
 left join userdb_master.model_portfolio_labels models
   on models.labelable_uid = smp.model_portfolio_set_uid
   and upper(models.labelable_type) = 'MODELPORTFOLIOSET'
+  and upper(models.key) = 'EXTERNAL_ID'
+left join userdb_master.model_portfolio_labels acm
+  on acm.labelable_uid = smp.model_portfolio_set_uid
+  and upper(acm.labelable_type) = 'MODELPORTFOLIOSET'
+  and upper(acm.key) = 'EXTERNAL_ID'
+inner join
+  userdb_master.plans p 
+  on p.id = sa.plan_id
+  and p.db_name = sa.db_name
+left join userdb_master.offerings o 
+  on o.db_name = sa.db_name 
+  and o.name = 'Workplace Managed Accounts'
+where upper(sa.status) = 'ACTIVE'
+--------------------------------
+
+
+SELECT DISTINCT
+p.plan_name 
+, p.external_id
+, models.value set_id
+,acm.value acm_id
+from userdb_master.staged_model_portfolios smp 
+left join userdb_master.model_portfolio_set_activations sa
+on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid 
+left join userdb_master.model_portfolio_labels models
+  on models.labelable_uid = smp.model_portfolio_set_uid
+  and upper(models.labelable_type) = 'MODELPORTFOLIOSET'
    and upper(sa.type) = 'MODELPORTFOLIOSETACTIVATION'
    and  upper(models.key) = 'EXTERNAL_ID'
 left join userdb_master.model_portfolio_labels acm
