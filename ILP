@@ -9,6 +9,7 @@ p.plan_name
 , sa.activation_date
 , sa.deactivation_date
 , te.expense_type
+, sa.offering_id
 from  userdb_master.staged_model_portfolios smp 
 inner join 
   userdb_master.allocations al 
@@ -124,6 +125,8 @@ left join
   on l.labelable_uid = smp.model_portfolio_set_uid
 left join userdb_master.model_portfolio_set_activations sa
 on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid 
+left join userdb_master.tenant_expense_types te
+  on te.id = sa.tenant_expense_type_id
 inner join 
   userdb_master.plans p 
   on p.id = sa.plan_id
