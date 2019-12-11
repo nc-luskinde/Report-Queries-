@@ -3,6 +3,7 @@ p.plan_name
 , p.external_id
 , models.value set_id
 , COALESCE(growth_label.value, lookup_key.value) equity_level
+, , inv_horizon.value investment_horizon
 , a.description_1 fund
 , a.ticker
 , al.weight 
@@ -35,6 +36,11 @@ left join
   on lookup_key.labelable_uid = smp.uid
   and upper(lookup_key.labelable_type) = 'MODELPORTFOLIO'  
   and upper(lookup_key.key) = 'LOOKUP_KEY'
+left join 
+  userdb_master.model_portfolio_labels inv_horizon
+  on inv_horizon.labelable_uid = smp.uid
+  and upper(inv_horizon.labelable_type) = 'MODELPORTFOLIO'  
+  and upper(inv_horizon.key) = 'INVESTMENT_HORIZON'
 left join userdb_master.model_portfolio_set_activations sa
 on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid 
 left join userdb_master.tenant_expense_types te
