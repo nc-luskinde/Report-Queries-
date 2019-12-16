@@ -6,7 +6,7 @@ SELECT distinct
   , ps.is_eligible_for_managed_accounts
   , ps.status
   , ps.asset_id
-  . md.security_type_id
+  , md.security_type_id
   , ps.close_date
   , ps.activation_date
  
