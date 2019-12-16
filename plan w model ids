@@ -1,6 +1,6 @@
 SELECT DISTINCT
-rk.name RK_Name
-p.plan_name 
+, rk.name RK_Name
+, p.plan_name 
 , p.external_id
 , models.value set_id
 ,acm.value acm_id
