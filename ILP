@@ -3,7 +3,7 @@ p.plan_name
 , p.external_id
 , models.value set_id
 , COALESCE(growth_label.value, lookup_key.value) equity_level
-, , inv_horizon.value investment_horizon
+, inv_horizon.value investment_horizon
 , a.description_1 fund
 , a.ticker
 , al.weight 
