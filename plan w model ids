@@ -1,5 +1,5 @@
 SELECT DISTINCT
-, rk.name RK_Name
+rk.name RK_Name
 , p.plan_name 
 , p.external_id
 , models.value set_id
