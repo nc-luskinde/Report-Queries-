@@ -1,0 +1,23 @@
+-- select record_keepers.external_uid, plans.external_uid, count(plan_rules.uid)
+-- from "PRODUCTION"."USERDB_MASTER".plans, "PRODUCTION"."USERDB_MASTER".plan_rules, "PRODUCTION"."USERDB_MASTER".plan_rules_contexts, "PRODUCTION"."USERDB_MASTER".record_keepers
+-- where plans.uid = plan_rules_contexts.context_uid and plan_rules_contexts.plan_rule_uid = plan_rules.uid and plans.record_keeper_uid = record_keepers.uid
+--     and plans.managed_account_start_date is not null --and plans.external_id in ('CDG', 'Firehouse')
+--     --and plan_rules_contexts.context_type = 'Account'
+-- group by record_keepers.external_uid, plans.external_uid, plan_rules.name;
+
+--plan level rules, matching the context 
+-- select plan_rules.*
+-- from "PRODUCTION"."USERDB_MASTER".plans, "PRODUCTION"."USERDB_MASTER".plan_rules, "PRODUCTION"."USERDB_MASTER".plan_rules_contexts, "PRODUCTION"."USERDB_MASTER".record_keepers
+-- where plans.uid = plan_rules_contexts.context_uid and plan_rules_contexts.plan_rule_uid = plan_rules.uid and plans.record_keeper_uid = record_keepers.uid
+--     and plans.managed_account_start_date is not null and plans.external_id in ('964120'); --, 'Firehouse')
+    --and plan_rules_contexts.context_type = 'Account';
+    
+--pulling rules per subaccount, add in plan_rules.data_value
+select record_keepers.external_uid, plans.external_uid, plan_sub_accounts.external_uid, plan_rules.name, plan_rules.data_value --count(plan_rules.uid)
+from "PRODUCTION"."USERDB_MASTER".plans, "PRODUCTION"."USERDB_MASTER".plan_rules, "PRODUCTION"."USERDB_MASTER".plan_rules_contexts,
+    "PRODUCTION"."USERDB_MASTER".record_keepers, "PRODUCTION"."USERDB_MASTER".plan_sub_accounts
+where plans.uid = plan_sub_accounts.plan_uid and plan_sub_accounts.plan_uid = plan_rules_contexts.context_uid and plan_rules_contexts.plan_rule_uid = plan_rules.uid
+    and plans.record_keeper_uid = record_keepers.uid
+    and plans.managed_account_start_date is not null and plans.external_id in ('964120') and plan_sub_accounts.external_id = 'M'
+    and plan_rules_contexts.context_type = 'PlanSubAccount';
+--group by record_keepers.external_uid, plans.external_uid, plan_sub_accounts.external_uid, plan_rules.name;
