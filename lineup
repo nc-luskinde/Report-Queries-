@@ -1,3 +1,4 @@
+--- with securitymasterasset
 SELECT distinct
   p.plan_name
   , p.external_id
