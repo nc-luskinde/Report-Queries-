@@ -1,4 +1,3 @@
----in progress; adding securitymasterassets fields
 SELECT distinct
   p.plan_name
   , p.external_id
@@ -18,18 +17,19 @@ userdb_master.plan_securities ps
 left join 
 userdb_master.plans p
 on p.uid = ps.plan_uid 
-left join 
+join 
 MARKET_DATA.ASSETS md 
 on md.asset_id = ps.asset_id
 left join
 market_data.security_master_assets sma
 on sma.asset_id  = md.asset_id
-left join 
-userdb_master.record_keepers rk
-on rk.uid = p.record_keeper_uid
+-- left join 
+-- userdb_master.record_keepers rk
+-- on rk.uid = p.record_keeper_uid
 where 
 upper(p.external_id) = '965118'
-and upper(sma.record_keeper_id) = 'oneamerica'
+--and upper(sma.record_keeper_id) = 'oneamerica'
+and sma.security_id like concat(p.external_id, '%')
 ;
 ------
 SELECT distinct
