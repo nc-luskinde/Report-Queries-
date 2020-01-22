@@ -3,6 +3,7 @@ SELECT distinct
   , p.external_id
   , md.description_1 fund
   , md.ticker
+  , md.cusip
   , sma.record_keeper_id
   , sma.security_id
   , ps.is_eligible_for_managed_accounts
