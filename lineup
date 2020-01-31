@@ -29,8 +29,8 @@ on sma.asset_id  = md.asset_id
 -- userdb_master.record_keepers rk
 -- on rk.uid = p.record_keeper_uid
 where 
-upper(p.external_id) = '965118'
---and upper(sma.record_keeper_id) = 'oneamerica'
+upper(p.external_id) = '%'
+--and upper(sma.record_keeper_id) = 'newport'
 and sma.security_id like concat(p.external_id, '%')
 ;
 ------
@@ -55,5 +55,5 @@ left join
 MARKET_DATA.ASSETS md 
 on md.asset_id = ps.asset_id
 where 
-upper(p.external_id) = 'HMI'
+upper(p.external_id) = '%'
 ;
