@@ -1,3 +1,45 @@
+SELECT distinct
+  p.plan_name
+  , p.external_id
+  , md.description_1 fund
+  , md.ticker
+  , md.cusip
+  --, sma.record_keeper_id
+  --, sma.security_id
+  , ps.is_eligible_for_managed_accounts
+  , ps.status
+  , ps.asset_id
+  , md.security_type_id
+  , ps.close_date
+  , ps.activation_date
+ 
+FROM 
+userdb_master.plan_securities ps
+left join 
+userdb_master.plans p
+on p.uid = ps.plan_uid 
+join 
+MARKET_DATA.ASSETS md 
+on md.asset_id = ps.asset_id
+left join
+market_data.security_master_assets sma
+on sma.asset_id  = md.asset_id
+-- left join 
+-- userdb_master.record_keepers rk
+-- on rk.uid = p.record_keeper_uid
+where 
+upper(p.external_id) = 'FM00002'
+--and upper(sma.record_keeper_id) = 'newport'
+--and sma.security_id like concat(p.external_id, 'FM00002')
+and md.security_type_id not in (28, 48, 50, 49, 1, 19, 25)
+--https://github.com/BLC/rails/blob/master/app/models/market_data/security_type.rb
+and ps.close_date is null or ps.close_date > CURRENT_DATE()
+---RKs don't consistently include an activation date, can be open with no activation date
+and upper(ps.status) = 'open'
+and upper(ps.is_eligible_for_managed_accounts) = 'true'
+;
+
+
 --- with securitymasterasset
 SELECT distinct
   p.plan_name
