@@ -7,6 +7,7 @@ SELECT distinct
   --, sma.record_keeper_id
   --, sma.security_id
   , ps.is_eligible_for_managed_accounts
+  , ps.include_in_model_portfolios
   , ps.status
   , ps.asset_id
   , md.security_type_id
