@@ -1,0 +1,68 @@
+---with securitymasterasset fields
+SELECT DISTINCT
+sma.record_keeper_id
+, p.plan_name 
+, p.external_id
+, models.value set_id
+--, COALESCE(growth_label.value, lookup_key.value) equity_level
+--, inv_horizon.value investment_horizon
+, a.description_1 fund
+, a.ticker
+, sma.security_id
+--, al.weight 
+, sa.activation_date
+, sa.deactivation_date
+, te.expense_type
+, sa.offering_id
+from  userdb_master.staged_model_portfolios smp 
+inner join 
+  userdb_master.allocations al 
+  on al.staged_model_portfolio_id = smp.id 
+  and al.db_name = smp.db_name 
+left join 
+userdb_master.plan_securities ps 
+  on ps.asset_id = al.target_id
+left join 
+market_data.assets a
+  on a.asset_id = ps.asset_id
+left join userdb_master.model_portfolio_labels models
+  on models.labelable_uid = smp.model_portfolio_set_uid
+  and upper(models.labelable_type) = 'MODELPORTFOLIOSET'
+  and upper(models.key) = 'EXTERNAL_ID'
+left join 
+  userdb_master.model_portfolio_labels growth_label
+  on growth_label.labelable_uid = smp.uid
+  and upper(growth_label.labelable_type) = 'MODELPORTFOLIO'  
+  and upper(growth_label.key) = 'GROWTH_ALLOCATION'
+left join 
+  userdb_master.model_portfolio_labels lookup_key
+  on lookup_key.labelable_uid = smp.uid
+  and upper(lookup_key.labelable_type) = 'MODELPORTFOLIO'  
+  and upper(lookup_key.key) = 'LOOKUP_KEY'
+left join 
+  userdb_master.model_portfolio_labels inv_horizon
+  on inv_horizon.labelable_uid = smp.uid
+  and upper(inv_horizon.labelable_type) = 'MODELPORTFOLIO'  
+  and upper(inv_horizon.key) = 'INVESTMENT_HORIZON'
+left join userdb_master.model_portfolio_set_activations sa
+on sa.model_portfolio_set_uid = smp.model_portfolio_set_uid 
+left join userdb_master.tenant_expense_types te
+  on te.id = sa.tenant_expense_type_id
+inner join 
+  userdb_master.plans p 
+  on p.id = sa.plan_id
+  and p.db_name = sa.db_name
+left join
+market_data.security_master_assets sma
+on sma.asset_id  = a.asset_id
+where upper(al.target_type) = 'ASSETNORTHAMERICA'
+and upper(sa.status) = 'ACTIVE'
+and upper(sa.type) = 'SECURITYMODELPORTFOLIOSETACTIVATION'
+and upper(p.external_id) = '965118'
+anD upper(sma.record_keeper_id) = 'ONEAMERICA'
+and ps.close_date is NULL
+and upper(te.expense_type) = 'RETIREMENT'
+and sma.security_id like concat(p.external_id, '%') ---OA only 
+
+order by 4,5 asc
+;
