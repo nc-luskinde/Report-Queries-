@@ -1,0 +1,11 @@
+select
+sma.record_keeper_id
+, sma.security_name
+, sma.security_id
+, sma.ticker
+, sma.security_type_id
+, sma.is_private
+from market_data.security_master_assets sma
+where upper(sma.record_keeper_id) = 'ONEAMERICA' 
+order by 2,3 
+;
