@@ -4,10 +4,10 @@ SELECT distinct
   , md.description_1 fund
   , md.ticker
   , md.cusip
-  --, sma.record_keeper_id
-  --, sma.security_id
+  , sma.record_keeper_id
+  , sma.security_id
   , ps.is_eligible_for_managed_accounts
-  , ps.include_in_model_portfolios
+  --, ps.include_in_model_portfolios 
   , ps.status
   , ps.asset_id
   , md.security_type_id
@@ -26,12 +26,10 @@ left join
 market_data.security_master_assets sma
 on sma.asset_id  = md.asset_id
 and sma.security_id like concat(p.external_id, 'FM00002') ---if don't find will still get records back
--- left join 
--- userdb_master.record_keepers rk
--- on rk.uid = p.record_keeper_uid
+
 where 
 upper(p.external_id) = 'FM00002'
---and upper(sma.record_keeper_id) = 'newport'
+and upper(sma.record_keeper_id) = 'NEWPORT'
 and md.security_type_id not in (28, 48, 50, 49, 1, 19, 25)
 --https://github.com/BLC/rails/blob/master/app/models/market_data/security_type.rb
 and ps.close_date is null or ps.close_date > CURRENT_DATE()
