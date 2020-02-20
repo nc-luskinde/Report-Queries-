@@ -1,4 +1,5 @@
----with securitymasterasset fields
+------Final-------
+-with securitymasterasset fields
 SELECT DISTINCT
 sma.record_keeper_id
 , p.plan_name 
@@ -55,19 +56,20 @@ inner join
 left join
 market_data.security_master_assets sma
 on sma.asset_id  = a.asset_id
+and sma.security_id like concat(p.external_id, '%') ---OA only 
 where upper(al.target_type) = 'ASSETNORTHAMERICA'
 and upper(sa.status) = 'ACTIVE'
 and upper(sa.type) = 'SECURITYMODELPORTFOLIOSETACTIVATION'
 and upper(p.external_id) = '965118'
-and upper(sma.record_keeper_id) = 'Newport'
+and upper(sma.record_keeper_id) = 'NEWPORT'
 and ps.close_date is NULL
 and upper(te.expense_type) = 'RETIREMENT'
-and sma.security_id like concat(p.external_id, '%') ---OA only 
+
 
 order by 4,5 asc
 ;
 
-
+---Final------------------
 -------
 SELECT DISTINCT
 p.plan_name 
