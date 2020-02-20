@@ -2,7 +2,7 @@
 SELECT distinct
   p.plan_name
   , p.external_id
-  , md.description_1 fund
+  , sma.security_name
   , md.ticker
   , md.cusip
   , sma.record_keeper_id
