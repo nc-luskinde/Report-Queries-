@@ -1,3 +1,4 @@
+----Final-------
 SELECT distinct
   p.plan_name
   , p.external_id
@@ -38,6 +39,7 @@ and upper(ps.status) = 'open'
 and upper(ps.is_eligible_for_managed_accounts) = 'true'
 ;
 
+-----Final--------------
 
 --- with securitymasterasset
 SELECT distinct
