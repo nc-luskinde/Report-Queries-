@@ -7,8 +7,8 @@ sma.record_keeper_id
 , models.value set_id
 , COALESCE(growth_label.value, lookup_key.value) equity_level
 , inv_horizon.value investment_horizon
-, a.description_1 fund
-, a.ticker
+, sma.security_name
+, sma.ticker
 , sma.security_id
 , al.weight 
 , sa.activation_date
