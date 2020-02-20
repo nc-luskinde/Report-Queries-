@@ -1,11 +1,11 @@
 ----Final-------
 SELECT distinct
-  p.plan_name
+  sma.record_keeper_id
+  , p.plan_name
   , p.external_id
   , sma.security_name
-  , md.ticker
+  , sma.ticker
   , md.cusip
-  , sma.record_keeper_id
   , sma.security_id
   , ps.is_eligible_for_managed_accounts
   --, ps.include_in_model_portfolios 
@@ -26,7 +26,7 @@ on md.asset_id = ps.asset_id
 left join
 market_data.security_master_assets sma
 on sma.asset_id  = md.asset_id
-and sma.security_id like concat(p.external_id, '%') ---if don't find will still get records back
+--and sma.security_id like concat(p.external_id, '%') ---OA ONLY
 
 where 
 upper(p.external_id) = 'FM00002'
