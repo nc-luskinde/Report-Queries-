@@ -4,6 +4,7 @@ SELECT distinct
   , p.plan_name
   , p.external_id
   , sma.security_name
+  , md.description_1 
   , sma.ticker
   , md.cusip
   , sma.security_id
