@@ -1,0 +1,14 @@
+select
+sma.record_keeper_id
+, sma.security_name
+, sma.security_id
+--, sma.ticker
+, sma.cusip
+, sma.security_type_id
+, sma.is_private
+from market_data.security_master_assets sma
+where upper(sma.record_keeper_id) = 'NEWPORT'
+and sma.security_id not in ('stub_workplace_loan', 'stub_company_stock', 'stub_brokerage_window', 'constant_price_test', 'private_asset_1', 'private_asset_2', 'stub_tdf', 'stub_tdf_2', 'stub_tdf_3', '4EDF', '57D0', '488C', 'E895', 'E72B', 'B2B1', 'ABAA', 'F67F', 'ABBA', '054A', '61C4', '82A3', '20E8', 'B428', 'E01A', 'B960', 'RU1', 'RU2', 'RU3', 'RU4', 'RU5', 'RU6', 'RU7', 'RU8', 'RU9', 'RU10', 'RU12', 'RU13', 'RU14', 'RU15', 'RU16', 'RU17', 'RU18', 'RU19', 'RU20', 'RU21', 'RU22', 'RU23', 'RU24', 'RU25', 'RU26', 'RU27', 'RU28', 'JH_ID_1', 'JH_ID_2', 'JH_ID_3', 'JH_ID_4', 'JH_ID_5', 'JH_ID_6', 'JH_ID_7', 'JH_ID_9', 'JH_ID_10', 'JH_ID_12', 'JH_ID_14', 'FFGCX', 'VGXRX', 'VGSIX', 'VEIEX', 'VSTCX', 'VLACX', 'VEMBX', 'VTIBX', 'VWEHX', 'VCORX', 'VIPSX')--newport only 
+
+order by 2,3 
+;
