@@ -15,8 +15,7 @@ SELECT distinct
   , md.security_type_id
   , ps.close_date
   , ps.activation_date
-  , ps.uid
-  ,exids.model_uid
+ 
  
 FROM 
 userdb_master.plan_securities ps
